@@ -1,6 +1,32 @@
 import { html, css, LitElement } from 'lit';
 
+/**
+ * `buttons-bar` é um Web Component baseado em LitElement
+ * que fornece uma barra de botões com slots configuráveis
+ * para alinhar conteúdo à esquerda, centro (info) e direita.
+ *
+ * ### Slots disponíveis:
+ * - `left` → para colocar botões ou elementos alinhados à esquerda.
+ * - `info` → para texto ou informações adicionais (centralizadas/direita).
+ * - `right` → para botões ou elementos alinhados à direita.
+ *
+ * ### Estilos:
+ * - Usa variáveis Lumo para margens (`--lumo-space-s`, `--lumo-space-xs`).
+ * - Aplica `box-shadow` por padrão, que pode ser removido com o atributo `no-scroll`.
+ *
+ * ### Responsividade:
+ * - Abaixo de 600px, o conteúdo do slot `info` passa a ocupar a linha toda
+ *   e aparece acima dos botões (`order: -1`).
+ *
+ * @element buttons-bar
+ * @extends LitElement
+ */
 class ButtonsBarElement extends LitElement {
+  /**
+   * Estilos aplicados ao componente.
+   *
+   * @returns {import('lit').CSSResultGroup}
+   */
   static get styles() {
     return css`
       :host {
@@ -38,6 +64,11 @@ class ButtonsBarElement extends LitElement {
     `;
   }
 
+  /**
+   * Renderiza os slots para os diferentes grupos de botões/informação.
+   *
+   * @returns {import('lit').TemplateResult}
+   */
   render() {
     return html`
       <slot name="left"></slot>
@@ -46,6 +77,11 @@ class ButtonsBarElement extends LitElement {
     `;
   }
 
+  /**
+   * Nome da tag do componente customizado.
+   *
+   * @returns {string}
+   */
   static get is() {
     return 'buttons-bar';
   }
