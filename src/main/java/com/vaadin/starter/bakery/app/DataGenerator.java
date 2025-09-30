@@ -135,7 +135,17 @@ public class DataGenerator implements HasLogger {
 			}
 		}
 	}
-
+/**
+ * Cria uma nova encomenda com dados gerados aleatoriamente, incluindo cliente, produtos,
+ * comentários, histórico e local de levantamento.
+ *
+ * @param productSupplier Função que fornece produtos aleatórios.
+ * @param pickupLocationSupplier Função que fornece locais de levantamento aleatórios.
+ * @param barista Utilizador com o papel de barista, responsável por iniciar a encomenda.
+ * @param baker Utilizador com o papel de pasteleiro, que pode atualizar o estado da encomenda.
+ * @param dueDate Data de levantamento da encomenda.
+ * @return Uma nova instância de {@link Order} com todos os campos preenchidos.
+ */
 	private Order createOrder(Supplier<Product> productSupplier, Supplier<PickupLocation> pickupLocationSupplier,
 			User barista, User baker, LocalDate dueDate) {
 		Order order = new Order(barista);
