@@ -1,4 +1,13 @@
-# grupoLEI Pedro Brito 123854 Tiago Nogueira 122693 Taissa Gabirro 123286
+**Nome do grupo:** grupoLEI  
+
+## Membros do Grupo
+
+| Curso                  | Número  | Nome           |
+|-------------------------|---------|----------------|
+| Engenharia Informática  | 123854  | Pedro Brito    |
+| Engenharia Informática  | 122693  | Tiago Nogueira |
+| Engenharia Informática  | 123286  | Taíssa Andrade |
+
 # ⚠️ This starter is not recommended ⚠️
 
 **This starter is not recommended for new Vaadin Flow applications. Instead, visit [start.vaadin.com](https://start.vaadin.com/) to configure and download a Vaadin project that reflects the current best practices.**
