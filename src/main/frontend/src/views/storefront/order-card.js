@@ -3,7 +3,25 @@ import { map } from 'lit/directives/map.js';
 import './order-status-badge.js';
 import { sharedStyles } from '../../../styles/shared-styles.js';
 
+/**
+ * `order-card` é um Web Component que representa visualmente um cartão de encomenda.
+ *
+ * Usado tipicamente para exibir:
+ * - Estado da encomenda (via badge)
+ * - Data, hora e local
+ * - Nome do cliente
+ * - Lista de produtos encomendados
+ *
+ * Suporta clique para interação com eventos externos.
+ *
+ * @element order-card
+ * @extends LitElement
+ */
 class OrderCard extends LitElement {
+  /**
+   * Estilos CSS aplicados ao componente. Utiliza o tema Lumo.
+   * Define o layout responsivo, estrutura do cartão e estilos dos produtos.
+   */
   static get styles() {
     return [
       sharedStyles,
@@ -22,8 +40,8 @@ class OrderCard extends LitElement {
         .wrapper {
           background: var(--lumo-base-color);
           background-image: linear-gradient(
-            var(--lumo-tint-5pct),
-            var(--lumo-tint-5pct)
+              var(--lumo-tint-5pct),
+              var(--lumo-tint-5pct)
           );
           box-shadow: 0 3px 5px var(--lumo-shade-10pct);
           border-bottom: 1px solid var(--lumo-shade-10pct);
@@ -81,7 +99,6 @@ class OrderCard extends LitElement {
 
         .name {
           word-break: break-all;
-          /* Non standard for WebKit */
           word-break: break-word;
           white-space: normal;
         }
@@ -113,7 +130,6 @@ class OrderCard extends LitElement {
         .goods-item > div {
           flex: auto;
           word-break: break-all;
-          /* Non standard for WebKit */
           word-break: break-word;
           white-space: normal;
         }
@@ -127,10 +143,6 @@ class OrderCard extends LitElement {
             border-radius: var(--lumo-border-radius);
           }
 
-          .badge {
-            margin: 0;
-          }
-
           .content {
             max-width: 964px;
           }
@@ -139,6 +151,15 @@ class OrderCard extends LitElement {
     ];
   }
 
+  /**
+   * Renderiza o componente `order-card`, que inclui:
+   * - Cabeçalho opcional (`header`)
+   * - Status da encomenda (`order-status-badge`)
+   * - Informações de data/hora/local
+   * - Nome do cliente e lista de produtos encomendados
+   *
+   * @returns {import('lit-html').TemplateResult}
+   */
   render() {
     return html`
       <div class="content">
@@ -150,8 +171,8 @@ class OrderCard extends LitElement {
         <div class="wrapper" @click="${this._cardClick}">
           <div class="info-wrapper">
             <order-status-badge
-              class="badge"
-              .status="${this.orderCard && this.orderCard.state}"
+                class="badge"
+                .status="${this.orderCard && this.orderCard.state}"
             ></order-status-badge>
 
             <div class="time-place">
@@ -186,6 +207,13 @@ class OrderCard extends LitElement {
     `;
   }
 
+  /**
+   * Define as propriedades observadas e reativas do componente.
+   *
+   * @property {Object} orderCard - Objeto com os dados da encomenda (cliente, estado, produtos, horários, etc.)
+   * @property {Object} header - Objeto opcional com informação de agrupamento (ex: data principal e secundária)
+   * @property {Object} item - (reservado para uso futuro)
+   */
   static get properties() {
     return {
       orderCard: { type: Object },
@@ -194,13 +222,24 @@ class OrderCard extends LitElement {
     };
   }
 
+  /**
+   * Nome do elemento personalizado.
+   * @returns {string}
+   */
   static get is() {
     return 'order-card';
   }
 
+  /**
+   * Evento disparado quando o cartão é clicado.
+   *
+   * @fires card-click
+   * @private
+   */
   _cardClick() {
     this.dispatchEvent(new CustomEvent('card-click'));
   }
 }
 
+// Registo do componente personalizado
 customElements.define(OrderCard.is, OrderCard);
