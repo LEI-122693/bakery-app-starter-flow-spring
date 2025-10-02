@@ -13,7 +13,26 @@ import { ScrollShadowMixin } from '../../components/utils-mixin.js';
 import './order-item-editor.js';
 import { sharedStyles } from '../../../styles/shared-styles.js';
 
+/**
+ * `order-editor` é um Web Component baseado em LitElement usado para criar e editar encomendas.
+ * Permite ao utilizador introduzir detalhes como:
+ * - Data de entrega
+ * - Hora de entrega
+ * - Local de recolha
+ * - Informação do cliente
+ * - Produtos da encomenda
+ *
+ * Inclui uma barra inferior com ações de Cancelar e Rever a encomenda.
+ *
+ * @element order-editor
+ * @extends LitElement
+ * @mixes ScrollShadowMixin
+ */
 class OrderEditor extends ScrollShadowMixin(LitElement) {
+  /**
+   * Estilos aplicados ao componente.
+   * Utiliza variáveis do tema Lumo e estilos partilhados.
+   */
   static get styles() {
     return [
       sharedStyles,
@@ -44,6 +63,12 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
     ];
   }
 
+  /**
+   * Renderiza o formulário de edição de encomendas com campos para cliente,
+   * produtos, data, hora e local de recolha.
+   *
+   * @returns {import('lit-html').TemplateResult} HTML do componente
+   */
   render() {
     return html`
       <div class="scrollable flex1" id="main">
@@ -51,20 +76,20 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
 
         <div class="meta-row" id="metaContainer">
           <vaadin-combo-box
-            class="status"
-            id="status"
-            status="${this.__toLowerCase(this.status)}"
+              class="status"
+              id="status"
+              status="${this.__toLowerCase(this.status)}"
           ></vaadin-combo-box>
           <span class="dim">Order #<span id="orderNumber"></span></span>
         </div>
 
         <vaadin-form-layout
-          id="form1"
-          .responsiveSteps="${this.form1responsiveSteps}"
+            id="form1"
+            .responsiveSteps="${this.form1responsiveSteps}"
         >
           <vaadin-form-layout
-            id="form2"
-            .responsiveSteps="${this.form2responsiveSteps}"
+              id="form2"
+              .responsiveSteps="${this.form2responsiveSteps}"
           >
             <vaadin-date-picker label="Due" id="dueDate"> </vaadin-date-picker>
             <vaadin-combo-box id="dueTime">
@@ -76,9 +101,9 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
           </vaadin-form-layout>
 
           <vaadin-form-layout
-            id="form3"
-            colspan="3"
-            .responsiveSteps="${this.form3responsiveSteps}"
+              id="form3"
+              colspan="3"
+              .responsiveSteps="${this.form3responsiveSteps}"
           >
             <vaadin-text-field id="customerName" label="Customer" colspan="2">
               <vaadin-icon slot="prefix" icon="vaadin:user"></vaadin-icon>
@@ -89,9 +114,9 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
             </vaadin-text-field>
 
             <vaadin-text-field
-              id="customerDetails"
-              label="Additional Details"
-              colspan="2"
+                id="customerDetails"
+                label="Additional Details"
+                colspan="2"
             ></vaadin-text-field>
 
             <vaadin-form-item colspan="3">
@@ -113,30 +138,34 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
     `;
   }
 
+  /**
+   * Nome do custom element (tag HTML).
+   * @returns {string} O nome do componente ('order-editor')
+   */
   static get is() {
     return 'order-editor';
   }
 
+  /**
+   * Propriedades observadas (reativas) pelo componente.
+   * - `status`: estado atual da encomenda (String)
+   * - `totalPrice`: preço total da encomenda (String)
+   * - `form1responsiveSteps`, `form2responsiveSteps`, `form3responsiveSteps`: arrays com definições de responsividade para os layouts
+   */
   static get properties() {
     return {
-      status: {
-        type: String,
-      },
-      totalPrice: {
-        type: String,
-      },
-      form1responsiveSteps: {
-        type: Array,
-      },
-      form2responsiveSteps: {
-        type: Array,
-      },
-      form3responsiveSteps: {
-        type: Array,
-      },
+      status: { type: String },
+      totalPrice: { type: String },
+      form1responsiveSteps: { type: Array },
+      form2responsiveSteps: { type: Array },
+      form3responsiveSteps: { type: Array },
     };
   }
 
+  /**
+   * Construtor do componente. Inicializa os passos de responsividade
+   * dos layouts de formulário.
+   */
   constructor() {
     super();
 
@@ -145,11 +174,13 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
       { columns: 1, labelsPosition: 'top' },
       { minWidth: '600px', columns: 4, labelsPosition: 'top' },
     ];
+
     /** @type {{ minWidth: string | 0; columns: number; labelsPosition: "top" | "aside"; }[]} */
     this.form2responsiveSteps = [
       { columns: 1, labelsPosition: 'top' },
       { minWidth: '360px', columns: 2, labelsPosition: 'top' },
     ];
+
     /** @type {{ minWidth: string | 0; columns: number; labelsPosition: "top" | "aside"; }[]} */
     this.form3responsiveSteps = [
       { columns: 1, labelsPosition: 'top' },
@@ -157,9 +188,18 @@ class OrderEditor extends ScrollShadowMixin(LitElement) {
     ];
   }
 
+  /**
+   * Converte o estado (`status`) para lowercase.
+   * Usado para aplicar estilos ou atributos que dependem de valores em minúsculas.
+   *
+   * @param {string} status
+   * @returns {string}
+   * @private
+   */
   __toLowerCase(status) {
     return status ? status.toLowerCase() : '';
   }
 }
 
+// Regista o componente no browser
 customElements.define(OrderEditor.is, OrderEditor);
