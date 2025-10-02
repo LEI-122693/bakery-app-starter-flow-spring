@@ -1,29 +1,31 @@
 import { html, css, LitElement } from 'lit';
 
 /**
- * `buttons-bar` é um Web Component baseado em LitElement que cria
- * uma barra de botões com layout responsivo.
+ * `buttons-bar` é um Web Component baseado em LitElement
+ * que fornece uma barra de botões com slots configuráveis
+ * para alinhar conteúdo à esquerda, centro (info) e direita.
  *
  * ### Slots disponíveis:
- * - `left`: Para botões ou conteúdo à esquerda.
- * - `info`: Conteúdo informativo (normalmente à direita, pode ocupar 100% no mobile).
- * - `right`: Para botões ou conteúdo à direita.
+ * - `left` → para colocar botões ou elementos alinhados à esquerda.
+ * - `info` → para texto ou informações adicionais (centralizadas/direita).
+ * - `right` → para botões ou elementos alinhados à direita.
  *
- * ### Atributos:
- * - `no-scroll`: Remove a sombra superior quando ativo. Usado quando a barra está fixa
- *   e não precisa de separação visual com o conteúdo acima.
+ * ### Estilos:
+ * - Usa variáveis Lumo para margens (`--lumo-space-s`, `--lumo-space-xs`).
+ * - Aplica `box-shadow` por padrão, que pode ser removido com o atributo `no-scroll`.
  *
- * ### Estilos aplicados:
- * Utiliza variáveis CSS do Lumo (`--lumo-space-s`, `--lumo-shade-20pct`, etc.)
- * e adapta o layout para ecrãs pequenos (mobile-first).
+ * ### Responsividade:
+ * - Abaixo de 600px, o conteúdo do slot `info` passa a ocupar a linha toda
+ *   e aparece acima dos botões (`order: -1`).
  *
  * @element buttons-bar
  * @extends LitElement
  */
 class ButtonsBarElement extends LitElement {
   /**
-   * Define os estilos do componente.
-   * Usa flexbox para distribuir o conteúdo e estilos reativos para dispositivos móveis.
+   * Estilos aplicados ao componente.
+   *
+   * @returns {import('lit').CSSResultGroup}
    */
   static get styles() {
     return css`
@@ -63,14 +65,9 @@ class ButtonsBarElement extends LitElement {
   }
 
   /**
-   * Renderiza os slots do componente:
-   * - `left`: lado esquerdo
-   * - `info`: centro (ou linha inteira em ecrãs pequenos)
-   * - `right`: lado direito
+   * Renderiza os slots para os diferentes grupos de botões/informação.
    *
-   * O slot "info" inclui por defeito um `<div class="info"></div>` se nada for fornecido.
-   *
-   * @returns {import('lit-html').TemplateResult} Template HTML renderizado pelo Lit
+   * @returns {import('lit').TemplateResult}
    */
   render() {
     return html`
@@ -81,7 +78,8 @@ class ButtonsBarElement extends LitElement {
   }
 
   /**
-   * Nome do elemento personalizado a ser registado.
+   * Nome da tag do componente customizado.
+   *
    * @returns {string}
    */
   static get is() {
@@ -89,5 +87,4 @@ class ButtonsBarElement extends LitElement {
   }
 }
 
-// Regista o Web Component no browser
 customElements.define(ButtonsBarElement.is, ButtonsBarElement);
